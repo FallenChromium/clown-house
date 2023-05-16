@@ -10,7 +10,7 @@ from handlers.CityObjectType import CityObjectType
 
 router = APIRouter()
 class CityObjectModel(SQLModel):
-    id : Optional[int] = Field(default=None, primary_key=True)
+    id : int | None = Field(default=None, primary_key=True)
     ObjectTypeId : int = Field(default=None, foreign_key="city_object_types.id")
     Address : str   
     ObjectName: str
