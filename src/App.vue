@@ -1,25 +1,15 @@
 <script setup lang="ts">
-import {  RouterView } from "vue-router";
-import Navbar from "./components/Navbar.vue"
-import { darkTheme, NMessageProvider, NConfigProvider } from 'naive-ui'
-
+import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <n-config-provider >
-    <n-message-provider >
-      <Navbar />
-    </n-message-provider>
-
-      <Suspense>
-        <div :style="{margin: '32px'}">
+  <component :is="$route.meta.layout || 'div'">
+    <Suspense>
+      <div :style="{ margin: '32px' }">
         <RouterView />
       </div>
-      </Suspense>
-  </n-config-provider>
-
+    </Suspense>
+  </component>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

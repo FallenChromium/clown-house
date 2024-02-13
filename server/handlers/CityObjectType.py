@@ -1,18 +1,14 @@
 from sqlmodel import Field, SQLModel, Session, select
-from typing import Optional
+from typing import Optional, Union
 from config import engine
-
+from fastapi import APIRouter, HTTPException
+from sqlalchemy.exc import NoResultFound
 class CityObjectType(SQLModel, table=True):
     __tablename__: str = "city_object_types"
     id : Optional[int] = Field(default=None, primary_key=True)
     ObjectTypeName : str
    
-from sqlmodel import Field, SQLModel, Session, select
-from typing import Optional, Union
-from datetime import date
-from fastapi import APIRouter, HTTPException
-from config import engine
-from sqlalchemy.exc import NoResultFound
+
 
 router = APIRouter()
 

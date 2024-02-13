@@ -1,16 +1,13 @@
 from sqlmodel import Field, SQLModel, Session, select
-from typing import Optional
-
+from typing import Optional, Union
+from fastapi import APIRouter, HTTPException
+from config import engine
+from sqlalchemy.exc import NoResultFound
 class CityEventType(SQLModel, table=True):
     __tablename__ : str = "city_event_types"
     id : Optional[int] = Field(default=None, primary_key=True)
     EventTypeName : str
 
-from sqlmodel import Field, SQLModel, Session, select
-from typing import Optional, Union
-from fastapi import APIRouter, HTTPException
-from config import engine
-from sqlalchemy.exc import NoResultFound
 
 router = APIRouter()
 

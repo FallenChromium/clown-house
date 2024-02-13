@@ -1,5 +1,7 @@
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import FastAPI, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
+
 from sqlmodel import SQLModel
 from handlers import CityObject
 from handlers import CityObjectType
@@ -7,7 +9,8 @@ from handlers import CityObjectOwner
 from handlers import CityObjectStats
 from handlers import CityEvent
 from handlers import CityEventType
-import config
+from handlers import User
+from config import auth, engine
 app = FastAPI()
 
 origins = [
@@ -26,14 +29,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-SQLModel.metadata.create_all(config.engine)
 
-app.include_router(CityObject.router)
+auth.handle_errors(app)
+
+
+SQLModel.metadata.create_all(engine)
+    
+app.include_router(CityObject.router, dependencies=[Depends(auth.access_token_required)])
 app.include_router(CityObjectType.router)
 app.include_router(CityObjectOwner.router)
 app.include_router(CityObjectStats.router)
 app.include_router(CityEvent.router)
 app.include_router(CityEventType.router)
+app.include_router(User.router)
 
 
 
